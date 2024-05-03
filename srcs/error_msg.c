@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 12:54:39 by enschnei          #+#    #+#             */
-/*   Updated: 2024/05/03 14:59:25 by enschnei         ###   ########.fr       */
+/*   Created: 2024/04/30 14:30:41 by enschnei          #+#    #+#             */
+/*   Updated: 2024/04/30 14:54:36 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <sys/wait.h>
 
-int main(int ac, char **av, char **env)
-{
-	(void)av;
-	(void)env;
-	(void)ac;
-	
-	// if (ac != 5)
-	// 	exit(0);
-	// all_error(ac, av, env);
-    return (0);
-}	
+// int error_files(int ac, char **av, char **env)
+// {
+// 	return(0);
+// }
+
+// void all_error(int ac, char **av, char **env)
+// {
+// 	(void)
+// 	if (error_files(ac, av, env) == 1)
+// 		exit(0);
+// }

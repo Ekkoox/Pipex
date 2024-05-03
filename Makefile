@@ -1,6 +1,8 @@
 NAME = pipex
 
 C_FILES = main.c\
+			start.c\
+			error_msg.c\
 
 SRCS = $(addprefix srcs/,$(C_FILES))
 

@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 12:54:39 by enschnei          #+#    #+#             */
-/*   Updated: 2024/05/03 14:59:25 by enschnei         ###   ########.fr       */
+/*   Created: 2024/05/03 15:02:58 by enschnei          #+#    #+#             */
+/*   Updated: 2024/05/03 16:39:47 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <sys/wait.h>
 
-int main(int ac, char **av, char **env)
+void army_of_fork(t_pipe *fork)
 {
-	(void)av;
-	(void)env;
-	(void)ac;
-	
-	// if (ac != 5)
-	// 	exit(0);
-	// all_error(ac, av, env);
-    return (0);
-}	
+	while 	
+}
+
+void creat_the_pipe(t_pipe *pipe)
+{
+	int pipefd[2];
+
+	if (pipefd == -1)
+		exit(0);	
+	return ;
+}
