@@ -6,46 +6,40 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:02:58 by enschnei          #+#    #+#             */
-/*   Updated: 2024/05/27 15:32:19 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:59:00 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void army_of_fork(t_pipe *file_1)
+static void create_the_pipe(t_pipe *pipex)
 {
-	int fd[2];	
+	if (pipe(pipex->fd) == -1)
+	{
+		perror("Error pipe\n");
+		exit(EXIT_FAILURE);	
+	}
+}
+
+void army_of_fork(t_pipe *pipe)
+{	
 	int id_fork;
 
 	id_fork = fork();
 	if (id_fork == -1)
 	{
-		ft_printf("Error with the fork");
+		ft_printf("Error with the fork\n");
 		exit(EXIT_FAILURE);
 	}
-	error_exec();
 	if (id_fork == 0)
+		first_child(pipe);
+	id_fork = fork();
+	if (id_fork == -1)
 	{
-		close (fd[0]);
-		write(fd[1], &file_1, sizeof(file_1));
-		close (fd[1]);
+		ft_printf("Error with the fork\n");
+		exit(EXIT_FAILURE);
 	}
-	else
-	{
-		close (fd[1]);
-		read(fd[0], &file_1, sizeof(file_1));
-		close (fd[0]);
-	}
+	if (id_fork == 0)
+		second_child(pipe);
 }
 
-void create_the_pipe(t_pipe *pipe)
-{
-	// int pipefd[2];
-
-	// if (pipefd == -1)
-	// {
-	// 	perror("Error pipe");
-	// 	exit(EXIT_FAILURE);	
-	// }
-	// return ;
-}

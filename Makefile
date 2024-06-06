@@ -1,7 +1,8 @@
 NAME = pipex
 
 C_FILES = main.c\
-			start.c\
+			pipe.c\
+			utils.c\
 			error_msg.c\
 			get_the_path.c\
 
