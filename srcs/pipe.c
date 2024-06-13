@@ -6,13 +6,13 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:02:58 by enschnei          #+#    #+#             */
-/*   Updated: 2024/06/06 18:59:00 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:52:57 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void create_the_pipe(t_pipe *pipex)
+static void create_the_pipe(t_pipex *pipex)
 {
 	if (pipe(pipex->fd) == -1)
 	{
@@ -21,10 +21,11 @@ static void create_the_pipe(t_pipe *pipex)
 	}
 }
 
-void army_of_fork(t_pipe *pipe)
+void army_of_fork(t_pipex *pipex)
 {	
 	int id_fork;
 
+	create_the_pipe(pipex);
 	id_fork = fork();
 	if (id_fork == -1)
 	{
@@ -32,7 +33,7 @@ void army_of_fork(t_pipe *pipe)
 		exit(EXIT_FAILURE);
 	}
 	if (id_fork == 0)
-		first_child(pipe);
+		first_child(pipex);
 	id_fork = fork();
 	if (id_fork == -1)
 	{
@@ -40,6 +41,6 @@ void army_of_fork(t_pipe *pipe)
 		exit(EXIT_FAILURE);
 	}
 	if (id_fork == 0)
-		second_child(pipe);
+		second_child(pipex);
 }
 

@@ -3,7 +3,6 @@ NAME = pipex
 C_FILES = main.c\
 			pipe.c\
 			utils.c\
-			error_msg.c\
 			get_the_path.c\
 
 SRCS = $(addprefix srcs/,$(C_FILES))
