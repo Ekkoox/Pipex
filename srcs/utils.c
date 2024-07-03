@@ -6,7 +6,7 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:27:49 by enschnei          #+#    #+#             */
-/*   Updated: 2024/06/21 16:47:49 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:52:56 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	first_child(t_pipex *pipex)
 	fd = open(pipex->file_1, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error fd\n", 2);
+		ft_putstr_fd("Permission denied\n", 2);
 		return ;
 	}
 	if (dup2(fd, 0) == -1)
@@ -33,10 +33,15 @@ void	first_child(t_pipex *pipex)
 	path = get_the_command_1(pipex);
 	if (!path)
 	{
+		ft_putstr_fd("No such file or directory2\n", 2);
 		free_all(pipex);
 		exit(EXIT_FAILURE);
 	}
-	execve(path, pipex->command_1, pipex->ev);
+	if (execve(path, pipex->command_1, pipex->ev) == -1)
+	{
+		ft_putstr_fd("Epic fail compilation 2013 [HD]\n", 2);
+		free_all(pipex);
+	}
 	exit(0);
 }
 
@@ -48,7 +53,7 @@ void	second_child(t_pipex *pipex)
 	fd = open(pipex->file_2, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error fd\n", 2);
+		ft_putstr_fd("Permission denied\n", 2);
 		return ;
 	}
 	if (dup2(fd, 1) == -1)
@@ -61,10 +66,15 @@ void	second_child(t_pipex *pipex)
 	path = get_the_command_2(pipex);
 	if (!path)
 	{
+		ft_putstr_fd("No such file or directory3\n", 2);
 		free_all(pipex);
 		exit(EXIT_FAILURE);
 	}
-	execve(path, pipex->command_2, pipex->ev);
+	if (execve(path, pipex->command_1, pipex->ev) == -1)
+	{
+		ft_putstr_fd("Epic fail compilation 2013 [HD]\n", 2);
+		free_all(pipex);
+	}
 	exit(0);
 }
 

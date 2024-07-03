@@ -6,7 +6,7 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:14:27 by enschnei          #+#    #+#             */
-/*   Updated: 2024/06/21 16:54:28 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:01:34 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	**split_the_path(t_pipex *pipex)
 	pipex->path = ft_split(pipex->ligne_path + 5, ':');
 	if (!pipex->path)
 	{
+		ft_putstr_fd("No such file or directory1\n", 2);
 		ft_free(pipex->command_1, ft_count_line_split(pipex->command_1));
 		ft_free(pipex->command_2, ft_count_line_split(pipex->command_2));
 		exit(EXIT_FAILURE);
@@ -52,6 +53,8 @@ char	*search_the_path(t_pipex *pipex, char *command)
 	char	*tmp;
 	char	*path;
 
+	if (pipex->path == NULL)
+		return (NULL);
 	i = 0;
 	tmp = ft_strjoin("/", command);
 	if (!tmp)
@@ -76,14 +79,21 @@ char	*get_the_command_1(t_pipex *pipex)
 	char	*path;
 
 	i = 0;
-	if (!pipex->command_1[0] || !pipex->command_2[0])
+	if (!pipex->command_1[0])
 	{
-		free_all (pipex);
-		return (NULL);
+		ft_putstr_fd("Command not found\n", 2);
+		free_all(pipex);
+		exit(EXIT_FAILURE);
 	}
 	if (!ft_strchr(pipex->command_1[0], '/') && pipex->command_1[0][0] != '.')
 	{
 		path = search_the_path(pipex, pipex->command_1[0]);
+		if (!path)
+		{
+			ft_putstr_fd("Command not found\n", 2);
+			free_all(pipex);
+			exit(EXIT_FAILURE);
+		}
 		return (path);
 	}
 	if (access(pipex->command_1[0], F_OK | X_OK) == 0)
@@ -97,15 +107,21 @@ char	*get_the_command_2(t_pipex *pipex)
 	char	*path;
 
 	i = 0;
-	if (!pipex->command_1[0] || !pipex->command_2[0])
+	if (!pipex->command_2[0])
 	{
 		ft_putstr_fd("Command not found\n", 2);
 		free_all(pipex);
-		return (NULL);
+		exit(EXIT_FAILURE);
 	}
 	if (!ft_strchr(pipex->command_2[0], '/') && pipex->command_2[0][0] != '.')
 	{
 		path = search_the_path(pipex, pipex->command_2[0]);
+		if (!path)
+		{
+			ft_putstr_fd("Command not found\n", 2);
+			free_all(pipex);
+			exit(EXIT_FAILURE);
+		}
 		return (path);
 	}
 	if (access(pipex->command_2[0], F_OK | X_OK) == 0)
