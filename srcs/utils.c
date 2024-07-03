@@ -6,11 +6,33 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:27:49 by enschnei          #+#    #+#             */
-/*   Updated: 2024/07/03 14:52:56 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:52:49 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	free_all(t_pipex *pipex)
+{
+	if (pipex->path)
+		ft_free(pipex->path, ft_count_line_split(pipex->path));
+	ft_free(pipex->command_1, ft_count_line_split(pipex->command_1));
+	ft_free(pipex->command_2, ft_count_line_split(pipex->command_2));
+	exit(EXIT_SUCCESS);
+}
+
+static void	close_all(t_pipex *pipex)
+{
+	close(pipex->fd[0]);
+	close(pipex->fd[1]);
+}
+
+static void	error_execve(t_pipex *pipex)
+{
+	ft_putstr_fd("Execve error\n", 2);
+	free_all(pipex);
+	exit(EXIT_FAILURE);
+}
 
 void	first_child(t_pipex *pipex)
 {
@@ -28,21 +50,17 @@ void	first_child(t_pipex *pipex)
 	if (dup2(pipex->fd[1], 1) == -1)
 		return ;
 	close(fd);
-	close(pipex->fd[1]);
-	close(pipex->fd[0]);
+	close_all(pipex);
 	path = get_the_command_1(pipex);
 	if (!path)
 	{
-		ft_putstr_fd("No such file or directory2\n", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
 		free_all(pipex);
 		exit(EXIT_FAILURE);
 	}
 	if (execve(path, pipex->command_1, pipex->ev) == -1)
-	{
-		ft_putstr_fd("Epic fail compilation 2013 [HD]\n", 2);
-		free_all(pipex);
-	}
-	exit(0);
+		error_execve(pipex);
+	exit(EXIT_SUCCESS);
 }
 
 void	second_child(t_pipex *pipex)
@@ -61,28 +79,15 @@ void	second_child(t_pipex *pipex)
 	if (dup2(pipex->fd[0], 0) == -1)
 		return ;
 	close(fd);
-	close(pipex->fd[0]);
-	close(pipex->fd[1]);
+	close_all(pipex);
 	path = get_the_command_2(pipex);
 	if (!path)
 	{
-		ft_putstr_fd("No such file or directory3\n", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
 		free_all(pipex);
 		exit(EXIT_FAILURE);
 	}
 	if (execve(path, pipex->command_1, pipex->ev) == -1)
-	{
-		ft_putstr_fd("Epic fail compilation 2013 [HD]\n", 2);
-		free_all(pipex);
-	}
-	exit(0);
-}
-
-int	free_all(t_pipex *pipex)
-{
-	if (pipex->path)
-		ft_free(pipex->path, ft_count_line_split(pipex->path));
-	ft_free(pipex->command_1, ft_count_line_split(pipex->command_1));
-	ft_free(pipex->command_2, ft_count_line_split(pipex->command_2));
+		error_execve(pipex);
 	exit(EXIT_SUCCESS);
 }

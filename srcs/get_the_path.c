@@ -6,7 +6,7 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:14:27 by enschnei          #+#    #+#             */
-/*   Updated: 2024/07/03 15:01:34 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:15:47 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**split_the_path(t_pipex *pipex)
 	pipex->path = ft_split(pipex->ligne_path + 5, ':');
 	if (!pipex->path)
 	{
-		ft_putstr_fd("No such file or directory1\n", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
 		ft_free(pipex->command_1, ft_count_line_split(pipex->command_1));
 		ft_free(pipex->command_2, ft_count_line_split(pipex->command_2));
 		exit(EXIT_FAILURE);
