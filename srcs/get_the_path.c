@@ -6,7 +6,7 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:14:27 by enschnei          #+#    #+#             */
-/*   Updated: 2024/07/03 15:15:47 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:01:18 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*get_the_command_1(t_pipex *pipex)
 	i = 0;
 	if (!pipex->command_1[0])
 	{
-		ft_putstr_fd("Command not found\n", 2);
+		ft_putstr_fd("Malloc error\n", 2);
 		free_all(pipex);
 		exit(EXIT_FAILURE);
 	}
@@ -109,7 +109,7 @@ char	*get_the_command_2(t_pipex *pipex)
 	i = 0;
 	if (!pipex->command_2[0])
 	{
-		ft_putstr_fd("Command not found\n", 2);
+		ft_putstr_fd("Malloc error\n", 2);
 		free_all(pipex);
 		exit(EXIT_FAILURE);
 	}

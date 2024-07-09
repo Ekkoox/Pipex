@@ -6,7 +6,7 @@
 /*   By: enschnei <enschnei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:27:49 by enschnei          #+#    #+#             */
-/*   Updated: 2024/07/03 16:52:49 by enschnei         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:08:42 by enschnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	first_child(t_pipex *pipex)
 	}
 	if (execve(path, pipex->command_1, pipex->ev) == -1)
 		error_execve(pipex);
-	exit(EXIT_SUCCESS);
 }
 
 void	second_child(t_pipex *pipex)
@@ -87,7 +86,6 @@ void	second_child(t_pipex *pipex)
 		free_all(pipex);
 		exit(EXIT_FAILURE);
 	}
-	if (execve(path, pipex->command_1, pipex->ev) == -1)
+	if (execve(path, pipex->command_2, pipex->ev) == -1)
 		error_execve(pipex);
-	exit(EXIT_SUCCESS);
 }
